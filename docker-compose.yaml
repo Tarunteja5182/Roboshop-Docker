@@ -72,6 +72,8 @@ services:
     - user
     - catalogue
     - cart
+    - shipping
+    - payment
 
 networks:
  default:
