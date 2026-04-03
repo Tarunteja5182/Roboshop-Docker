@@ -10,7 +10,7 @@ services:
    image: taruntejamb/mongo:1.0.0
    container_name: mongodb
  redis:
-   image: redis:7 
+   image: taruntejamb/redis:7 
  user:
   build : ./user
   image : taruntejamb/user:1.0.0
@@ -35,16 +35,17 @@ services:
    image: taruntejamb/frontend:1.0.0
    container_name: frontend
    ports:
-     - 80:80
+     - "80:80"
    depends_on:
     - user
     - catalogue
     - cart
 
 networks:
- roboshop:
+ default:
+  name : roboshop
   driver : bridge
- 
+  external: false # if true, you need to create network manually
 
   
  
