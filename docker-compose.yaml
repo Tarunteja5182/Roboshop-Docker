@@ -1,0 +1,50 @@
+services:
+ catalogue:
+   build : ./catalogue
+   image : taruntejamb/catalogue:1.0.0
+   container_name: catalogue
+   depends_on:
+    - mongodb
+ mongodb:
+   build: ./mongodb
+   image: taruntejamb/mongo:1.0.0
+   container_name: mongodb
+ redis:
+   image: redis:7 
+ user:
+  build : ./user
+  image : taruntejamb/user:1.0.0
+  container_name: user
+  depends_on:
+   - mongodb
+   - redis 
+ cart:
+  build : ./cart
+  image : taruntejamb/cart:1.0.0
+  container_name: cart
+  depends_on:
+   - redis
+   - catalogue
+ mysql:
+  build : ./mysql
+  image : taruntejamb/mysql:1.0.0
+  container_name: mysql
+
+ frontend:
+   build : ./frontend
+   image: taruntejamb/frontend:1.0.0
+   container_name: frontend
+   ports:
+     - 80:80
+   depends_on:
+    - user
+    - catalogue
+    - cart
+
+networks:
+ roboshop:
+  driver : bridge
+ 
+
+  
+ 
