@@ -10,7 +10,7 @@ services:
    image: taruntejamb/mongo:1.0.0
    container_name: mongodb
  redis:
-   image: taruntejamb/redis:7 
+   image: redis:7.0
    container_name: redis
  user:
   build : ./user
