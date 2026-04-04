@@ -9,15 +9,21 @@ services:
    build: ./mongodb
    image: taruntejamb/mongo:1.0.0
    container_name: mongodb
+   volumes:
+    - mongodb :/data/db
  redis:
    image: redis:7.0
    container_name: redis
+   volumes:
+   - redis :/data
  rabbitmq:
    image : rabbitmq:3   
    environment:
     RABBITMQ_DEFAULT_USER: roboshop
     RABBITMQ_DEFAULT_PASS: roboshop123
    container_name: rabbitmq
+   volumes:
+   - rabbitmq :/var/lib/rabbitmq
  user:
   build : ./user
   image : taruntejamb/user:1.0.0
@@ -36,7 +42,8 @@ services:
   build : ./mysql
   image : taruntejamb/mysql:1.0.0
   container_name: mysql
- 
+  volumes:
+   - mysql :/var/lib/mysql
  shipping:
   build : ./shipping
   image : taruntejamb/shipping:1.0.0
@@ -81,5 +88,9 @@ networks:
   driver : bridge
   external: false # if true, you need to create network manually
 
-  
+volumes:
+  mongodb :         
+  mysql :
+  rabbitmq :
+  redis  :
  
