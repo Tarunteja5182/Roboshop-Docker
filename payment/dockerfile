@@ -14,7 +14,7 @@ RUN pip3 install -r requirements.txt
 FROM python:3.10.20-alpine3.23
 WORKDIR /app
 COPY --from=builder /app /app
-RUN groupadd -S roboshop && useradd -S roboshop -G roboshop
+RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
 RUN chown -R roboshop:roboshop /app
 USER roboshop
 ENTRYPOINT ["uwsgi" ,"--ini"]
