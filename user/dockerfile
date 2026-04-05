@@ -11,6 +11,7 @@ ENV MONGO=true \
     MONGO_URL=mongodb://mongodb:27017/users
 RUN groupadd -S roboshop & useradd -S roboshop -G roboshop
 RUN chown -R roboshop:roboshop /app
+USER roboshop
 ENTRYPOINT ["node"]
 CMD ["server.js"]
 

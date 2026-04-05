@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=builder /app /app
 RUN groupadd -S roboshop && useradd -S roboshop -G roboshop
 RUN chown -R roboshop:roboshop /app
-RUN user roboshop
+USER roboshop
 ENTRYPOINT ["uwsgi" ,"--ini"]
 CMD ["payment.ini"]
 
