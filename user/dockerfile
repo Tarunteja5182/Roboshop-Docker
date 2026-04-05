@@ -9,10 +9,10 @@ COPY --from=builder /app /app
 ENV MONGO=true \
     REDIS_URL=redis://redis:6379 \
     MONGO_URL=mongodb://mongodb:27017/users
-RUN addgroup -S roboshop & adduser -S roboshop -G roboshop
+RUN groupdd -S roboshop & useradd -S roboshop -G roboshop
 RUN chown -R roboshop:roboshop /app
-CMD ["node"]
-ENTRYPOINT ["server.js"]
+ENTRYPOINT ["node"]
+CMD ["server.js"]
 
 
 # FROM node:20

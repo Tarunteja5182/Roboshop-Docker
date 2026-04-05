@@ -7,13 +7,13 @@ RUN mv target/shipping-1.0.jar shipping.jar
 
 FROM maven:3.9-eclipse-temurin-25-alpine
 WORKDIR /app
-COPY --from=builder /app /app
-RUN addgroup -S roboshop & adduser -S roboshop -G roboshop
+COPY --from=builder /app/shipping.jar .
+RUN groupdd -S roboshop & useradd -S roboshop -G roboshop
 RUN chown -R roboshop:roboshop /app
 ENV CART_ENDPOINT=cart:8080 \
     DB_HOST=MySQL
-CMD ["java", "-jar"]
-ENTRYPOINT ["shipping.jar"]
+ENTRYPOINT ["java", "-jar"]
+CMD ["shipping.jar"]
 
 
 

@@ -10,7 +10,7 @@ COPY --from=builder /app /app
 ENV REDIS_HOST=redis \
     CATALOGUE_HOST=catalogue \
     CATALOGUE_PORT=8080
-RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
+RUN groupadd -S roboshop && useradd -S roboshop -G roboshop
 RUN chown -R roboshop:roboshop /app
 RUN user roboshop
 CMD ["node"]
