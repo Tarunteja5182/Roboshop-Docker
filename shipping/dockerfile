@@ -13,8 +13,8 @@ RUN chown -R roboshop:roboshop /app
 ENV CART_ENDPOINT=cart:8080 \
     DB_HOST=MySQL
 USER roboshop
-ENTRYPOINT ["java", "-jar"]
 CMD ["shipping.jar"]
+ENTRYPOINT ["java", "-jar"]
 
 
 

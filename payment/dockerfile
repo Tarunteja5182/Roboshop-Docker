@@ -17,8 +17,8 @@ COPY --from=builder /app /app
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
 RUN chown -R roboshop:roboshop /app
 USER roboshop
-ENTRYPOINT ["uwsgi" ,"--ini"]
 CMD ["payment.ini"]
+ENTRYPOINT ["uwsgi" ,"--ini"]
 
 
 
