@@ -1,9 +1,26 @@
-FROM node:20
-WORKDIR app
-COPY package.json .
+FROM  node:20.20.2-alpine3.23 AS builder
+WORKDIR /app
 COPY *.js .
-ENV MONGO="true" \
-    REDIS_URL="redis://redis:6379" \
-    MONGO_URL="mongodb://mongodb:27017/users"
-RUN npm install    
-CMD ["node","server.js"]
+COPY package.json .
+RUN npm install 
+
+FROM node:20.20.2-alpine3.23
+COPY --from=builder /app /app
+ENV MONGO=true \
+    REDIS_URL=redis://redis:6379
+    MONGO_URL=mongodb://mongodb:27017/users
+RUN addgroup -S roboshop & adduser -S roboshop -G roboshop
+RUN chown -R roboshop:roboshop /app
+CMD ["node"]
+ENTRYPOINT ["server.js"]
+
+
+# FROM node:20
+# WORKDIR app
+# COPY package.json .
+# COPY *.js .
+# ENV MONGO="true" \
+#     REDIS_URL="redis://redis:6379" \
+#     MONGO_URL="mongodb://mongodb:27017/users"
+# RUN npm install    
+# CMD ["node","server.js"]

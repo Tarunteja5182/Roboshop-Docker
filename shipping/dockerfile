@@ -1,9 +1,28 @@
-FROM maven:3.9.14
+FROM maven:3.9-eclipse-temurin-25-alpine AS builder
 WORKDIR /app
 COPY pom.xml .
-COPY src ./src 
-RUN mvn clean package
+COPY /src ./src
+RUN mvn clean package 
 RUN mv target/shipping-1.0.jar shipping.jar 
-ENV CART_ENDPOINT="cart:8080" \
-    DB_HOST="mysql"
-CMD ["java", "-jar", "shipping.jar"]
+
+FROM maven:3.9-eclipse-temurin-25-alpine
+WORKDIR /app
+COPY --from=builder /app /app
+RUN addgroup -S roboshop & adduser -S roboshop -G roboshop
+RUN chown -R roboshop:roboshop /app
+ENV CART_ENDPOINT=cart:8080 \
+    DB_HOST=MySQL
+CMD ["java", "-jar"]
+ENTRYPOINT ["shipping.jar"]
+
+
+
+# FROM maven:3.9.14
+# WORKDIR /app
+# COPY pom.xml .
+# COPY src ./src 
+# RUN mvn clean package
+# RUN mv target/shipping-1.0.jar shipping.jar 
+# ENV CART_ENDPOINT="cart:8080" \
+#     DB_HOST="mysql"
+# CMD ["java", "-jar", "shipping.jar"]
